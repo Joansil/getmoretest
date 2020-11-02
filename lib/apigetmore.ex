@@ -2,7 +2,7 @@ defmodule Apigetmore do
   def maioresufcsv do
   #usando a lib HTTPoison para carregar o csv direto do link que foi sugerido
   uf = HTTPoison.get!("https://gist.githubusercontent.com/chronossc/1a010c6968528066acbee6bc03c2aefa/raw/bfbd1f86ed026c935e6b4df365caf0cd054ce947/cities.csv").body
-  #tratandp as linhas do csv, para um padrão mais legível
+  #tratando as linhas do csv, para um padrão mais legível
     |> String.split("\n")
     #partindo as strings reescrevendo as siglas sem parênteses (através do range -3..-2 recebendo as cidades por uf)
     |> Enum.map(fn cidades-> String.slice(cidades, -3..-2) end)

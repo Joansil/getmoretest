@@ -1,12 +1,19 @@
 defmodule Apigetmore do
+  @moduledoc """
+    Este módulo trata-se de um teste de api para capturar um arquivo CSV hospedado, que contem os
+    estados e municípios brasileiros, e retorna os 3 estados que possuem mais municípios.
+  """
+  @doc """
+    Foi utilizada a lib HTTPoison para capturar o CSV direto do link que foi sugerido, e dar um
+    GET no body do CSV, depois os dados foram tratados para um padrão mais legível, partindo as strings
+    reescrevendo-as em siglas sem os parentêses`String.slice`. Logo após utilizada recursão para
+    filtrar e implementar o contador de cidades armazenadas no `map` e atualizar os valores da estrutura
+    E por fim a informação foi passada em ordem decrescente.
+  """
   def maioresufcsv do
-  #usando a lib HTTPoison para carregar o csv direto do link que foi sugerido
-  uf = HTTPoison.get!("https://gist.githubusercontent.com/chronossc/1a010c6968528066acbee6bc03c2aefa/raw/bfbd1f86ed026c935e6b4df365caf0cd054ce947/cities.csv").body
-  #tratando as linhas do csv, para um padrão mais legível
+    uf = HTTPoison.get!("https://gist.githubusercontent.com/chronossc/1a010c6968528066acbee6bc03c2aefa/raw/bfbd1f86ed026c935e6b4df365caf0cd054ce947/cities.csv").body
     |> String.split("\n")
-    #partindo as strings reescrevendo as siglas sem parênteses (através do range -3..-2 recebendo as cidades por uf)
     |> Enum.map(fn cidades-> String.slice(cidades, -3..-2) end)
-    #recursão utilizada para implementar o contador, atualizando com o map.merge (como em uma hashtable) no mapa%{}
     |> Enum.reduce( %{}, fn n, acc ->
         if acc[n] do
           count = acc[n] + 1
@@ -16,7 +23,6 @@ defmodule Apigetmore do
           Map.merge(acc, %{n => 1})
         end
       end)
-    #aqui o novo enumerável sorteando os elementos em posição decresente...3,2,1 - se fosse crescente seria :asc
     |> Enum.sort_by(&elem(&1, 1), :desc)
 
       maioruf = Enum.join(Tuple.to_list(Enum.at(uf, 0)), "-> ")

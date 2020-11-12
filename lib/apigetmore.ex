@@ -1,13 +1,13 @@
 defmodule Apigetmore do
   @moduledoc """
     Este módulo trata-se de um teste de api para capturar um arquivo CSV hospedado, que contem os
-    estados e municípios brasileiros, e retorna os 3 estados que possuem mais municípios.
+    estados e municípios brasileiros, e retorna os 3 maiores estados
   """
   @doc """
-    Foi utilizada a lib HTTPoison para capturar o CSV direto do link que foi sugerido, e dar um
+    Foi utilizada a lib HTTPoison para capturar o CSV via HTTP, e dar um
     GET no body do CSV, depois os dados foram tratados para um padrão mais legível, partindo as strings
-    reescrevendo-as em siglas sem os parentêses`String.slice`. Logo após utilizada recursão para
-    filtrar e implementar o contador de cidades armazenadas no `map` e atualizar os valores da estrutura
+    reescrevendo as siglas dos estados sem os parentêses`String.slice` e logo após utilizada recursão, para
+    filtrar e implementar o contador de cidades armazenadas no `map` e atualizar os valores da estrutura.
     E por fim a informação foi passada em ordem decrescente.
   """
   def maioresufcsv do
